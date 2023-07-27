@@ -4,6 +4,7 @@ import { Configuration, OpenAIApi, OPenAIAPI } from "openai"
 
 function App() {
   const [prompt, setPrompt] = useState("")
+  const [result, setResult] = useState("")
 
   const configuration = new Configuration({
     apikey: import.meta.env.VITE_Open_AI_Key
@@ -19,7 +20,7 @@ function App() {
     }
     )
 
-    console.log(res);
+    setResult(res.data.data[0].url)
   }
 
   return (
@@ -31,7 +32,13 @@ function App() {
      />
 
      <button onClick={generateImage}> Generate Now</button>
+      <hr/>
+      {result.length > 0 ? (
+        <img src={result} alt={result} />
 
+      ):(
+        <p>No data relates</p>
+      )}
 
     </>
   )
