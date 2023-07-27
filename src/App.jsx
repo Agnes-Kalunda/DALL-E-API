@@ -1,8 +1,6 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import { Configuration, OPenAIAPI } from "openai"
+import { Configuration, OpenAIApi, OPenAIAPI } from "openai"
 
 function App() {
   const [prompt, setPrompt] = useState("")
@@ -11,14 +9,28 @@ function App() {
     apikey: import.meta.env.VITE_Open_AI_Key
 })
 
+  const openai = new OpenAIApi(configuration)
+
+  const generateImage = async () =>{
+    const res = await openai.createImage({
+     prompt: prompt,
+     n: 1,
+     size: 512*512
+    }
+    )
+
+    console.log(res);
+  }
+
   return (
     <>
      <h2>Hiiiiii</h2>
      <textarea
      placeholder= "Generate Image"
+     onChange={(e) => setPrompt(e.target.value)}
      />
 
-     <button onClick> Generate Now</button>
+     <button onClick={generateImage}> Generate Now</button>
 
 
     </>
